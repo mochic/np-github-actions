@@ -34,7 +34,8 @@ def test_add_actions(runner: CliRunner, tmpdir_factory) -> None:
         ],
     )
     assert result.exit_code == 0, "Unexpected exit code."
-    print(project_dir.listdir())
+    print((project_dir / ".github" / "workflows").listdir())
+    print((project_dir / ".github").listdir())
     assert (project_dir / ".github" / "workflows" / "black.yml").exists()
     assert (project_dir / ".github" / "workflows" / "pypi.yml").exists()
     assert (project_dir / ".github" / "workflows" / "pytest.yml").exists()

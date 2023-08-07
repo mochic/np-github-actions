@@ -39,13 +39,19 @@ def add_actions(project_root, access_token, github_repo, branch_name, debug):
     auth = Auth.Token(access_token)
     gh_client = Github(auth=auth)
     repository = gh_client.get_repo(github_repo)
+    logger.debug("Getting actions from: %s" % github_repo)
     for action in GH_ACTIONS:
-        action_file = pathlib.Path(".github") / "workflows" / f"/{action}.yml"
-        action_file = pathlib.Path("Makefile")
-        workflow_file = repository.get_contents(action_file.name, ref=branch_name)
+        action_file = pathlib.Path(f".github/workflows/{action}.yml")
+        workflow_file = repository.get_contents(
+            action_file.as_posix(),
+            ref=branch_name,
+        )
         workflow_file_content = workflow_file.decoded_content.decode()
-        action_file.write_text(workflow_file_content)
-        logger.debug("Wrote gh action file: %s", action_file)
+        local_action_file = project_root / action_file
+        local_action_file.write_text(
+            workflow_file_content,
+        )
+        logger.debug("Wrote gh action file: %s", local_action_file)
 
 if __name__ == "__main__":
     main()
