@@ -1,0 +1,15 @@
+[project]
+name = "np-gh-actions"
+version = "0.1.0"
+description = ""
+authors = [
+    {name = "Christopher Mochizuki", email = "mochic808@gmail.com"},
+]
+dependencies = []
+requires-python = ">=3.9"
+readme = "README.md"
+license = {text = "MIT"}
+
+[build-system]
+requires = ["pdm-backend"]
+build-backend = "pdm.backend"
