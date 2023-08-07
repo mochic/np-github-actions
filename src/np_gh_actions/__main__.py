@@ -29,6 +29,8 @@ GH_ACTIONS = [
 def add_actions(project_root, access_token, github_repo, branch_name, debug):
     if debug:
         logger.setLevel(logging.DEBUG)
+    
+    logger.debug("Using project root: %s" % project_root)
 
     github_dir = pathlib.Path(project_root) / ".github"
     github_dir.mkdir(parents=True, exist_ok=True)
