@@ -1,12 +1,16 @@
-name: Publish to PyPI
+name: Run pytest
 
 on:
-  release:
-    types: [created]
+  push:
+    branches:
+      - main # Change to your main branch name if it's different
+  pull_request:
+    branches:
+      - main # Change to your main branch name if it's different
 
 jobs:
-  publish:
-    name: Publish
+  test:
+    name: Run pytest
     runs-on: ubuntu-latest
 
     steps:
@@ -19,14 +23,9 @@ jobs:
           python-version: "3.9"
 
       - name: Install dependencies
-        run: python -m pip install --upgrade pip
-      # Add other dependencies if needed
-
-      - name: Build and Publish
-        env:
-          TWINE_USERNAME: __token__ # PyPI username or use a secret named 'PYPI_USERNAME'
-          TWINE_PASSWORD: ${{ secrets.PYPI_TOKEN }} # PyPI token stored as a secret in your repository
         run: |
-          python setup.py sdist bdist_wheel
-          python -m pip install twine
-          twine upload dist/*
+          python -m pip install --upgrade pip
+          pip install pytest
+
+      - name: Run pytest
+        run: pytest
